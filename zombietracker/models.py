@@ -2,7 +2,7 @@ from pymongo import Connection
 import json
 import os.path
 
-dbconfig = json.loads(open(os.path.expanduser('~/zombietracker/configs/dbcreds.json')))
+dbconfig = json.loads(open(os.path.expanduser('~/zombietracker/configs/dbcreds.json')).read())
 
 
 def gmaps_img(points):
