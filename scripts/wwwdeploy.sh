@@ -10,13 +10,12 @@ useradd -m -s /bin/bash zombietracker
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> /home/zombietracker/.bashrc
 su zombietracker -c 'source /usr/local/bin/virtualenvwrapper.sh;mkvirtualenv zombietracker'
 
-cd /opt
+cd /home/zombietracker 
 git clone http://github.com/gekitsuu/zombietracker
-chown -R zombietracker:www-data /opt/zombietracker
 
-cp /opt/zombietracker/configs/apache.conf /etc/apache2/sites-available/default
+cp /home/zombietracker/zombietracker/configs/apache.conf /etc/apache2/sites-available/default
 
-su zombietracker -c 'cd /home/zombietracker; /home/zombietracker/.virtualenvs/zombietracker/bin/pip install flask pymongo'
-su zombietracker -c 'cd /home/zombietracker; /home/zombietracker/.virtualenvs/zombietracker/bin/python /opt/zombietracker/setup.py install'
+su zombietracker -c '/home/zombietracker/.virtualenvs/zombietracker/bin/pip install flask pymongo'
+su zombietracker -c '/home/zombietracker/.virtualenvs/zombietracker/bin/python /home/zombietracker/zombietracker/setup.py install'
 
 service apache2 restart
