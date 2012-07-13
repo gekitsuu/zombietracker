@@ -16,7 +16,7 @@ chown -R zombietracker:www-data /opt/zombietracker
 
 cp /opt/zombietracker/configs/apache.conf /etc/apache2/sites-available/default
 
-su zombietracker -c '/home/zombietracker/.virtualenvs/zombietracker/bin/pip install flask pymongo'
-su zombietracker -c '/home/zombietracker/.virtualenvs/zombietracker/bin/python /opt/zombietracker/setup.py install'
+su zombietracker -c 'cd /home/zombietracker; /home/zombietracker/.virtualenvs/zombietracker/bin/pip install flask pymongo'
+su zombietracker -c 'cd /home/zombietracker; /home/zombietracker/.virtualenvs/zombietracker/bin/python /opt/zombietracker/setup.py install'
 
 service apache2 restart
