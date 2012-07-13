@@ -1,0 +1,2 @@
+recursive-include zombietracker/static *
+recursive-include zombietracker/templates *
