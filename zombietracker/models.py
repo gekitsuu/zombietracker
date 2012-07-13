@@ -1,4 +1,8 @@
 from pymongo import Connection
+import json
+import os.path
+
+dbconfig = json.loads(open(os.path.expanduser('~/zombietracker/configs/dbcreds.json')))
 
 
 def gmaps_img(points):
@@ -12,7 +16,10 @@ def gmaps_img(points):
 
 class Database:
     def __init__(self):
-        mongo_loc = 'mongodb://joe:passwordForJoe@50.56.185.40:27017/zombietracker'
+        mongo_loc = dbconfig['mongouri']
+        for x in ['\%PASSWORD\%', '\%USERNAME\%', '\%IP\%']:
+            if x in mongo_loc:
+                raise ValueError("%s hasn't been set in db config file" % x)
         self.db = Connection(host=mongo_loc).zombietracker
 
     def add_sighting(self, sighting):
