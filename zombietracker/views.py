@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from models import Database
+from zombietracker.models import Database
 
 APP = Flask(__name__)
 APP.secret_key = '225B6F5A-8622-45E5-8FEF-4A913D8FF0F8'

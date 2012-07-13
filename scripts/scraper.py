@@ -2,8 +2,8 @@ import BeautifulSoup
 import re
 import urllib2
 import simplekml
-from geoloc import get_cords
-from models import Database
+from zombietracker.geoloc import get_cords
+from zombietracker.models import Database
 
 conn = Database()
 BASEURL = "http://minecraft-server-list.com/page/%d/"
