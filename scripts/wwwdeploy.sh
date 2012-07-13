@@ -16,6 +16,6 @@ git clone http://github.com/gekitsuu/zombietracker
 cp /home/zombietracker/zombietracker/configs/apache.conf /etc/apache2/sites-available/default
 
 su zombietracker -c '/home/zombietracker/.virtualenvs/zombietracker/bin/pip install flask pymongo'
-su zombietracker -c '/home/zombietracker/.virtualenvs/zombietracker/bin/python /home/zombietracker/zombietracker/setup.py install'
+su - zombietracker -c 'cd /home/zombietracker; source /home/zombietracker/.virtualenvs/zombietracker/bin/activate; pip install ./zombietracker'
 
 service apache2 restart
