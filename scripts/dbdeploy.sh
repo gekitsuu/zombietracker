@@ -7,6 +7,9 @@ apt-get update
 apt-get upgrade -y
 apt-get install -y mongodb-10gen python python-setuptools git
 easy_install pip
-pip install BeautifulSoup
+pip install BeautifulSoup pymongo
 
 git clone http://github.com/gekitsuu/zombietracker
+
+mongo /root/zombietracker/scripts/lockdown.js
+python /root/zombietracker/scripts/scraper.py

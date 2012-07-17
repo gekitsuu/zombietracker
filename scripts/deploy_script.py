@@ -72,15 +72,16 @@ def mycreatenode(servername, image, size, deploy):
     print("Finished creating %s with %s and size %s" %
         (servername, image.name, size.name))
 
+dbsize = [s for s in sizes if s.ram == 2048][0]
+mycreatenode('db-zt01.gekitsuu.org', image, dbsize, db_deploy_steps)
+
+
 # Create 2 512MB Debian Nodes named zombietracker0X.gekitsuu.org
 jobs = []
-newservers = ['www-zt01.gekitsuu.org',
-    'www-zt02.gekitsuu.org']
+newservers = ['www-zt01.gekitsuu.org', 'www-zt02.gekitsuu.org']
 for servername in newservers:
     jobs.append(gevent.spawn(mycreatenode, servername, image, size, www_deploy_steps))
 
-dbsize = [s for s in sizes if s.ram == 4096][0]
-jobs.append(gevent.spawn(mycreatenode, 'db-zt01.gekitsuu.org', image, dbsize, db_deploy_steps))
 gevent.joinall(jobs, timeout=600)
 
 
