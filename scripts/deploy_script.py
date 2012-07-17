@@ -77,45 +77,45 @@ mycreatenode('db-zt01.gekitsuu.org', image, dbsize, db_deploy_steps)
 
 
 # Create 2 512MB Debian Nodes named zombietracker0X.gekitsuu.org
-jobs = []
-newservers = ['www-zt01.gekitsuu.org', 'www-zt02.gekitsuu.org']
-for servername in newservers:
-    jobs.append(gevent.spawn(mycreatenode, servername, image, size, www_deploy_steps))
-
-gevent.joinall(jobs, timeout=600)
-
-
-public_ips = []
-keep_going = False
-while not keep_going:
-    nodes = compdriver.list_nodes()  # Get the list of nodes
-    xnodes = [x for x in nodes if re.search('www-zt', x.name)]  # Filter
-    node_states = [x.state for x in xnodes]  # Get a list of states
-
-    # Wait for the nodes to be ready (They should be already)
-    if libcloud.compute.types.NodeState.PENDING in node_states:
-        print("Nodes currently not running")
-        time.sleep(10)
-    else:
-        # Once the nodes are ready continue
-        print("Nodes is now running")
-
-        # Get the public IPV4 addresses of the nodes
-        for node in xnodes:
-            node_ips = node.public_ips
-            for ip in node_ips:
-                if re.search('(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)', ip):
-                    public_ips.append(ip)
-        keep_going = True
-
-
-# Create a load balancer now that the servers are built
-LBRackspace = libcloud.loadbalancer.providers.get_driver(
-    libcloud.loadbalancer.types.Provider.RACKSPACE_US)
-lbdriver = LBRackspace(config['username'], config['apikey'])
-
-# Create the load balanacer and add the servers
-members = [libcloud.loadbalancer.base.Member(None, i, 80) for i in public_ips]
-new_balancer = lbdriver.create_balancer(name='zombietracker-lb',
-    algorithm=libcloud.loadbalancer.base.Algorithm.ROUND_ROBIN,
-    port=80, protocol='http', members=members)
+#jobs = []
+#newservers = ['www-zt01.gekitsuu.org', 'www-zt02.gekitsuu.org']
+#for servername in newservers:
+#    jobs.append(gevent.spawn(mycreatenode, servername, image, size, www_deploy_steps))
+#
+#gevent.joinall(jobs, timeout=600)
+#
+#
+#public_ips = []
+#keep_going = False
+#while not keep_going:
+#    nodes = compdriver.list_nodes()  # Get the list of nodes
+#    xnodes = [x for x in nodes if re.search('www-zt', x.name)]  # Filter
+#    node_states = [x.state for x in xnodes]  # Get a list of states
+#
+#    # Wait for the nodes to be ready (They should be already)
+#    if libcloud.compute.types.NodeState.PENDING in node_states:
+#        print("Nodes currently not running")
+#        time.sleep(10)
+#    else:
+#        # Once the nodes are ready continue
+#        print("Nodes is now running")
+#
+#        # Get the public IPV4 addresses of the nodes
+#        for node in xnodes:
+#            node_ips = node.public_ips
+#            for ip in node_ips:
+#                if re.search('(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)', ip):
+#                    public_ips.append(ip)
+#        keep_going = True
+#
+#
+## Create a load balancer now that the servers are built
+#LBRackspace = libcloud.loadbalancer.providers.get_driver(
+#    libcloud.loadbalancer.types.Provider.RACKSPACE_US)
+#lbdriver = LBRackspace(config['username'], config['apikey'])
+#
+## Create the load balanacer and add the servers
+#members = [libcloud.loadbalancer.base.Member(None, i, 80) for i in public_ips]
+#new_balancer = lbdriver.create_balancer(name='zombietracker-lb',
+#    algorithm=libcloud.loadbalancer.base.Algorithm.ROUND_ROBIN,
+#    port=80, protocol='http', members=members)
