@@ -12,7 +12,6 @@ pip install BeautifulSoup pymongo
 git clone http://github.com/gekitsuu/zombietracker
 
 mongo /root/zombietracker/scripts/lockdown.js
-python /root/zombietracker/scripts/scraper.py
 
 echo "auth = True" >> /etc/mongodb.conf
 service mongodb restart
@@ -22,3 +21,5 @@ USERNAME=EliteZombieTracker
 PASSWORD=impossiblepassword
 
 sed -i -e "s!%IP%!$USERNAME:$PASSWORD@$DBIP!" /root/zombietracker/configs/dbcreds.json
+
+python /root/zombietracker/scripts/scraper.py
