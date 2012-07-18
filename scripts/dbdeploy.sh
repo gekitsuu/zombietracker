@@ -30,6 +30,6 @@ python scripts/scraper.py
 
 # Install Saltstack
 apt-get install -y python-software-properties
-add-apt-repository ppa:saltstack/salt
+add-apt-repository -y ppa:saltstack/salt
 apt-get update
 apt-get install -y salt-master salt-minion
