@@ -5,9 +5,9 @@ echo "deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen" >
 # Update the system
 apt-get update
 apt-get upgrade -y
-apt-get install -y mongodb-10gen python python-setuptools git salt pyzmq
+apt-get install -y mongodb-10gen python python-setuptools git
 easy_install pip
-pip install BeautifulSoup pymongo
+pip install BeautifulSoup pymongo salt pyzmq
 
 # Pull Down Zombie Tracker
 git clone http://github.com/gekitsuu/zombietracker
