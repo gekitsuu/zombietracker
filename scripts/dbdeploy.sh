@@ -43,3 +43,5 @@ service salt-master restart
 sed -i -e "s!#master: salt!master: $DBIP!" /etc/salt/minion
 service salt-minion restart
 salt-key -A
+
+sed -i -e "s!REPLACEME!$USERNAME:$PASSWORD@$DBIP!"

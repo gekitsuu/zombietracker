@@ -26,6 +26,3 @@ apt-get install -y python-software-properties
 add-apt-repository -y ppa:saltstack/salt
 apt-get update
 apt-get install -y salt-minion
-
-
-# sed -i -e "s!#master: salt!master: $MASTERIP!" /etc/salt/minion
