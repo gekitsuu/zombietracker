@@ -7,7 +7,7 @@ apt-get update
 apt-get upgrade -y
 apt-get install -y mongodb-10gen python python-setuptools git swig libssl-dev python-dev
 easy_install pip
-pip install BeautifulSoup pymongo
+pip install BeautifulSoup pymongo salt
 
 # Pull Down Zombie Tracker
 git clone http://github.com/gekitsuu/zombietracker
@@ -27,9 +27,3 @@ sed -i -e "s!%IP%!$USERNAME:$PASSWORD@$DBIP!" /root/zombietracker/configs/dbcred
 cd /root/zombietracker/
 pip install ./
 python scripts/scraper.py
-
-sudo apt-get install -y python-software-properties
-sudo add-apt-repository ppa:saltstack/salt
-sudo apt-get update
-sudo apt-get install -y salt-master
-sudo apt-get install -y salt-minion
