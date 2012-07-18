@@ -24,6 +24,9 @@ class Database:
 
     def add_sighting(self, sighting):
         cur = self.db.sightings.find_one({'name': 'zombietracker'})
+        if cur == None:
+            self.db.sightings.insert({'name': 'zombietracker'})
+            cur = self.db.sightings.find_one({'name': 'zombietracker'})
         try:
             cur['sightings'].append(sighting)
         except KeyError:
