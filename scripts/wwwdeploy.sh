@@ -1,7 +1,8 @@
 # Install Necessary Packages
-apt-get -y install apache2 wget git python python-setuptools libapache2-mod-wsgi python-software-properties
+dpkg --configure -a
 apt-get update
-apt-get upgrade -y
+apt-get -y install apache2 wget git python python-setuptools libapache2-mod-wsgi python-software-properties
+# apt-get upgrade -y
 
 # Install Python Package
 easy_install pip
@@ -25,3 +26,6 @@ apt-get install -y python-software-properties
 add-apt-repository -y ppa:saltstack/salt
 apt-get update
 apt-get install -y salt-minion
+
+
+# sed -i -e "s!#master: salt!master: $MASTERIP!" /etc/salt/minion

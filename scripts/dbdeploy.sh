@@ -4,7 +4,7 @@ echo "deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen" >
 
 # Update the system
 apt-get update
-apt-get upgrade -y
+# apt-get upgrade -y
 apt-get install -y mongodb-10gen python python-setuptools git
 easy_install pip
 pip install BeautifulSoup pymongo salt pyzmq PyYAML msgpack-python
@@ -39,4 +39,4 @@ apt-get install -y salt-master salt-minion
 # Configure salt-master
 
 sed -i -e "s!#interface: 0.0.0.0!interface: $DBIP!" /etc/salt/master
-
+service salt-master restart
