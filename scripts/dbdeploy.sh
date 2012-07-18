@@ -19,7 +19,7 @@ PASSWORD=impossiblepassword
 
 # Lockdown Mongo
 mongo /root/zombietracker/scripts/lockdown.js
-#sed -i -e "s!#auth = true!auth = true!" /etc/mongodb.conf
+sed -i -e "s!#auth = true!auth = true!" /etc/mongodb.conf
 echo "bind_ip = $DBIP" >> /etc/mongodb.conf
 service mongodb restart
 
