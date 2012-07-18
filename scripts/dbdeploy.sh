@@ -40,3 +40,6 @@ apt-get install -y salt-master salt-minion
 
 sed -i -e "s!#interface: 0.0.0.0!interface: $DBIP!" /etc/salt/master
 service salt-master restart
+sed -i -e "s!#master: salt!master: $DBIP!" /etc/salt/master
+service salt-minion restart
+salt-key -A
