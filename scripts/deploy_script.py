@@ -53,7 +53,8 @@ install_apache = ScriptDeployment(
     open(os.path.expanduser("./wwwdeploy.sh")).read())
 install_mongo = ScriptDeployment(
     open(os.path.expanduser("./dbdeploy.sh")))
-www_deploy_steps = MultiStepDeployment([install_key, install_apache])
+
+
 db_deploy_steps = MultiStepDeployment([install_key, install_mongo])
 
 
@@ -75,8 +76,15 @@ def mycreatenode(servername, image, size, deploy):
 dbsize = [s for s in sizes if s.ram == 2048][0]
 mycreatenode('db-zt01.gekitsuu.org', image, dbsize, db_deploy_steps)
 
+dbserver = [x for x in compdriver.list_nodes() if re.match('db.*', x.name)][0]
+dbserverip = dbserver.private_ips[0]
 
 # Create 2 512MB Debian Nodes named zombietracker0X.gekitsuu.org
+configure_salt = ScriptDeployment('sed -i -e "s!#master: salt!master: %s!" /etc/salt/minion' % dbserverip)
+restart_salt = ScriptDeployment('service salt-minion restart')
+restart_apache = ScriptDeployment('service apache2 restart')
+configure_db_creds = ScriptDeployment('sed -i -e "s!REPLACEME!EliteZombieTracker:impossiblepassword@%s!" /home/zombietracker/zombietracker/configs/dbcreds.json' % dbserverip)
+www_deploy_steps = MultiStepDeployment([install_key, install_apache, configure_salt, restart_salt, configure_db_creds, restart_apache])
 jobs = []
 newservers = ['www-zt01.gekitsuu.org', 'www-zt02.gekitsuu.org']
 for servername in newservers:
@@ -85,6 +93,7 @@ for servername in newservers:
 gevent.joinall(jobs, timeout=600)
 
 
+www_deploy_steps = MultiStepDeployment([install_key, install_apache])
 public_ips = []
 keep_going = False
 while not keep_going:
