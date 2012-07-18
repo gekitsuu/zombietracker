@@ -12,16 +12,18 @@ pip install BeautifulSoup pymongo salt pyzmq PyYAML msgpack-python
 # Pull Down Zombie Tracker
 git clone http://github.com/gekitsuu/zombietracker
 
+# Set some vars
+DBIP=`ifconfig eth1|grep 'inet addr'|awk -F':' '{print $2}'|awk '{print $1}'`
+USERNAME=EliteZombieTracker
+PASSWORD=impossiblepassword
+
 # Lockdown Mongo
 mongo /root/zombietracker/scripts/lockdown.js
-sed -i -e "s!#auth =True!auth = True!" /etc/mongodb.conf
+sed -i -e "s!#auth = true!auth = true!" /etc/mongodb.conf
+echo "bind_ip = $DBIP" >> /etc/mongodb.conf
 service mongodb restart
 
 # Populate The Database
-
-DBIP=`ifconfig eth0|grep 'inet addr'|awk -F':' '{print $2}'|awk '{print $1}'`
-USERNAME=EliteZombieTracker
-PASSWORD=impossiblepassword
 
 sed -i -e "s!%IP%!$USERNAME:$PASSWORD@$DBIP!" /root/zombietracker/configs/dbcreds.json
 cd /root/zombietracker/
@@ -33,3 +35,8 @@ apt-get install -y python-software-properties
 add-apt-repository -y ppa:saltstack/salt
 apt-get update
 apt-get install -y salt-master salt-minion
+
+# Configure salt-master
+
+sed -i -e "s!#interface: 0.0.0.0!interface: $DBIP!" /etc/salt/master
+
