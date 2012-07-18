@@ -23,7 +23,7 @@ su - zombietracker -c 'cd /home/zombietracker; source /home/zombietracker/.virtu
 service apache2 restart
 
 # Install Salt
-sudo apt-get install python-software-properties
+sudo apt-get install -y python-software-properties
 sudo apt-get update
-sudo apt-get install salt-master
-sudo apt-get install salt-minion
+sudo apt-get install -y salt-master
+sudo apt-get install -y salt-minion
