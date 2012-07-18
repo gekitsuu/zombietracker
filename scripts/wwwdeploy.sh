@@ -1,9 +1,9 @@
-# Update teh system
+# Install Necessary Packages
+apt-get -y install apache2 wget git python python-setuptools libapache2-mod-wsgi python-software-properties
+sudo add-apt-repository ppa:saltstack/salt
 apt-get update
 apt-get upgrade -y
-
-# Install Necessary Packages
-apt-get -y install apache2 wget git python python-setuptools libapache2-mod-wsgi 
+apt-get install salt-minion
 
 # Install Python Package
 easy_install pip
@@ -23,6 +23,7 @@ su - zombietracker -c 'cd /home/zombietracker; source /home/zombietracker/.virtu
 service apache2 restart
 
 # Install Salt
-cd /root/
-wget https://github.com/downloads/saltstack/salt/salt_0.9.5.pre-v0.9.4-10-g8182e48-1_all.deb
-dpkg -i salt_0.9.5.pre-v0.9.4-10-g8182e48-1_all.deb
+sudo apt-get install python-software-properties
+sudo apt-get update
+sudo apt-get install salt-master
+sudo apt-get install salt-minion

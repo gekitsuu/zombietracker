@@ -45,7 +45,7 @@ images = compdriver.list_images()  # Get a list of images
 sizes = compdriver.list_sizes()    # Get a list of server sizes
 
 size = [s for s in sizes if s.ram == 512][0]  # Get the 512MB sized machine
-image = [i for i in images if i.name == 'Debian 6 (Squeeze)'][0]  # Debian Img
+image = [i for i in images if i.name == 'Ubuntu 12.04 LTS'][0]  # Debian Img
 
 install_key = SSHKeyDeployment(
     open(os.path.expanduser("~/.ssh/id_rsa.pub")).read())

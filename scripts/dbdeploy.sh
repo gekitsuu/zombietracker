@@ -28,7 +28,8 @@ cd /root/zombietracker/
 pip install ./
 python scripts/scraper.py
 
-# Install Salt
-cd /root/
-wget https://github.com/downloads/saltstack/salt/salt_0.9.5.pre-v0.9.4-10-g8182e48-1_all.deb
-dpkg -i salt_0.9.5.pre-v0.9.4-10-g8182e48-1_all.deb
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:saltstack/salt
+sudo apt-get update
+sudo apt-get install salt-master
+sudo apt-get install salt-minion
