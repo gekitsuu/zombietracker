@@ -25,7 +25,7 @@ service mongodb restart
 
 # Populate The Database
 
-sed -i -e "s!%IP%!$USERNAME:$PASSWORD@$DBIP!" /root/zombietracker/configs/dbcreds.json
+sed -i -e "s!REPLACEME!$USERNAME:$PASSWORD@$DBIP!" /root/zombietracker/configs/dbcreds.json
 cd /root/zombietracker/
 pip install ./
 python scripts/scraper.py
@@ -43,5 +43,3 @@ service salt-master restart
 sed -i -e "s!#master: salt!master: $DBIP!" /etc/salt/minion
 service salt-minion restart
 salt-key -A
-
-sed -i -e "s!REPLACEME!$USERNAME:$PASSWORD@$DBIP!"
