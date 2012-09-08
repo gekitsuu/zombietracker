@@ -13,7 +13,8 @@ def findsightings():
         url = BASEURL % x
         opener = BeautifulSoup.BeautifulSoup(urllib2.urlopen(url))
         for elems in opener.findAll('tr'):
-            host = elems.find('strong')
+            host = elems.find('div', {'class': 'adressen online'})
+            print(host)
             cords = None
             try:
                 result = host.text
