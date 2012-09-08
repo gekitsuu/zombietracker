@@ -45,7 +45,7 @@ images = compdriver.list_images()  # Get a list of images
 sizes = compdriver.list_sizes()    # Get a list of server sizes
 
 size = [s for s in sizes if s.ram == 512][0]  # Get the 512MB sized machine
-image = [i for i in images if i.name == 'Ubuntu 12.04 LTS'][0]  # Debian Img
+image = [i for i in images if i.name == 'Ubuntu 12.04 LTS (Precise Pangolin)'][0]  # Debian Img
 
 install_key = SSHKeyDeployment(
     open(os.path.expanduser("~/.ssh/id_rsa.pub")).read())
@@ -80,10 +80,11 @@ dbserver = [x for x in compdriver.list_nodes() if re.match('db.*', x.name)][0]
 dbserverip = dbserver.private_ips[0]
 
 # Create 2 512MB Debian Nodes named zombietracker0X.gekitsuu.org
-configure_salt = ScriptDeployment('sed -i -e "s!#master: salt!master: %s!" /etc/salt/minion' % dbserverip)
-restart_salt = ScriptDeployment('service salt-minion restart')
-restart_apache = ScriptDeployment('service apache2 restart')
-configure_db_creds = ScriptDeployment('sed -i -e "s!REPLACEME!EliteZombieTracker:impossiblepassword@%s!" /home/zombietracker/zombietracker/configs/dbcreds.json' % dbserverip)
+saltscript = str('sed -i -e "s!#master: salt!master: %s!" /etc/salt/minion' % dbserverip)
+configure_salt = ScriptDeployment(saltscript)
+restart_salt = ScriptDeployment(str('service salt-minion restart'))
+restart_apache = ScriptDeployment(str('service apache2 restart'))
+configure_db_creds = ScriptDeployment(str('sed -i -e "s!REPLACEME!EliteZombieTracker:impossiblepassword@%s!" /home/zombietracker/zombietracker/configs/dbcreds.json' % dbserverip))
 www_deploy_steps = MultiStepDeployment([install_key, install_apache, configure_salt, restart_salt, configure_db_creds, restart_apache])
 jobs = []
 newservers = ['www-zt01.gekitsuu.org', 'www-zt02.gekitsuu.org']
